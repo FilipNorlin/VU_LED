@@ -1,6 +1,6 @@
 import math
 from Prefix import PrefixAdder
-from Converters import DB, Divider, Resistance
+from Converters import DB, Divider, Resistance, Charge
 from Non_inverted_summer import Non_inverted_summer
 
 pfix = PrefixAdder()
@@ -64,5 +64,20 @@ for i in range(len(led_voltage_values)):
     print(
         f"{pfix.add_prefix(db_values[i], 'dB')}: \t {pfix.add_prefix(led_voltage_values[i], 'V')}: \t {pfix.add_prefix(r, 'ohm')}"
     )
-    # print(pfix.add_prefix(v, "V"), end="\t")
-    # print(pfix.add_prefix(r, "Ohms"))
+
+print()
+print("-" * 50)
+print()
+
+R1 = 47e3
+R2 = 100e3
+
+Ic = Divider.voltage(R1, R2, vcc)
+
+# print(pfix.add_prefix(Charge.discharge_t(5, 1, 1000, 5e-6, None), "s"))
+# print(pfix.add_prefix(Charge.discharge_t(vmin, vmax, None, 47e-9, Ic), "s"))
+
+for i in range(len(led_voltage_values)):
+    duty_cycle = (led_voltage_values[i] - vref) / vref * 100
+
+    print(f"{pfix.add_prefix(db_values[i], 'db:')} \t {round(duty_cycle, 3)}%")
