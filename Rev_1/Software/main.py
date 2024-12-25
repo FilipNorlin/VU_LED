@@ -26,6 +26,8 @@ def resistor_network(Vcc, R1, voltages):
     return resistors
 
 
+print("\n --- Log Stage --- \n")
+
 # For the pwm signal to work properly with the sawtooth signal the
 # soundwave has to have a ptp voltage of (2/3 * vcc) - (1/3 * vcc).
 # The soundwave has to have its amplitude offsetted by 1/3 * vcc aswell
@@ -34,36 +36,33 @@ vcc = 5
 vmax = 2 / 3 * 5
 vmin = 1 / 3 * 5
 vref = vmax - vmin
-R1 = 1e6
+R1 = 1e5
 
 for db in db_values:
     voltage = DB.to_lin(db, vcc)
     sound_voltage_values.append(voltage)
 
 resistors = resistor_network(vcc, R1, sound_voltage_values)
-print(pfix.add_prefix(vcc, "V"))
 
 for i in range(len(resistors) - 1):
     print(
         f"{pfix.add_prefix(db_values[i], 'dB')}: \t {pfix.add_prefix(sound_voltage_values[i], 'V')}: \t {pfix.add_prefix(resistors[i + 1], 'ohm')}"
     )
 
+print()
+print("-" * 50)
+print()
 
 for db in db_values:
-    voltage = DB.to_lin(db, vref)
+    voltage = DB.to_lin(db, vref) + vmin
     led_voltage_values.append(voltage)
 
+led_voltage_values[0] = 5
 
-R_goal = 10e3
-
-resistor_divider = [10e3] * (len(led_voltage_values) - 1)
-resistor_divider.append(10e3)
-
-
-rtot = Resistance.parallel(resistor_divider)
-
-print(rtot)
-
-R1 = Divider.voltage_solve_for(led_voltage_values[0], 5, None, rtot)
-print(pfix.add_prefix(R1, "Ohm"))
-print(pfix.add_prefix(led_voltage_values[0], "V"))
+for i in range(len(led_voltage_values)):
+    r = Divider.voltage_solve_for(led_voltage_values[i], 5, None, 10e3)
+    print(
+        f"{pfix.add_prefix(db_values[i], 'dB')}: \t {pfix.add_prefix(led_voltage_values[i], 'V')}: \t {pfix.add_prefix(r, 'ohm')}"
+    )
+    # print(pfix.add_prefix(v, "V"), end="\t")
+    # print(pfix.add_prefix(r, "Ohms"))
