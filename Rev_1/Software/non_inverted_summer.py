@@ -19,7 +19,7 @@ class Input:
     # Setter for voltage
     @voltage.setter
     def voltage(self, value):
-        if not isinstance(value, float):
+        if not isinstance(value, (float, int)) and value != 0:
             raise ValueError("Voltage must be a float.")
         if value < 0:
             raise ValueError("Voltage cannot be negative.")
@@ -33,7 +33,7 @@ class Input:
     # Setter for resistor
     @resistor.setter
     def resistor(self, value):
-        if not isinstance(value, float):
+        if not isinstance(value, (float, int)):
             raise ValueError("Resistance must be a float.")
         if value <= 0:
             raise ValueError("Resistance must be positive.")
@@ -110,27 +110,3 @@ class Non_inverted_summer:
             f"Non_inverted_summer(Rf={self.Rf} Ω, Rg={self.Rg} Ω, "
             f"inputs={len(self._inputs)})"
         )
-
-
-# Example usage
-if __name__ == "__main__":
-    # Create an instance of Non_inverted_summer
-    summer = Non_inverted_summer(Rf=1000, Rg=1000)
-
-    # Add inputs
-    summer.add_input(V=5.0, R=1000.0, name="Input 1")
-    summer.add_input(V=3.3, R=2200.0, name="Input 2")
-    summer.add_input(V=1.5, R=1500.0, name="Input 3")
-
-    # Update an input
-    summer.update_input(name="Input 2", voltage=4.0, resistor=2000.0)
-
-    # Print Vout
-    print(pfix.add_prefix(summer.get_vout(), "V"))
-
-    # Display the summer
-    print(summer)
-
-    # Display all inputs
-    for input_obj in summer.inputs:
-        print(input_obj)
