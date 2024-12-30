@@ -330,6 +330,10 @@
     [
       "9f24f3ec-2e24-4ed7-9e90-0f911166188e",
       "Sawtooth Generator"
+    ],
+    [
+      "eecfbe12-16b7-4a10-8e6a-5f5c3ec83152",
+      "Filtering"
     ]
   ],
   "text_variables": {}
