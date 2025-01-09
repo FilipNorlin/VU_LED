@@ -1514,6 +1514,23 @@
     )
   )
 
+  (sheet (at 205.74 203.835) (size 42.545 27.94) (fields_autoplaced)
+    (stroke (width 0.1524) (type solid))
+    (fill (color 0 0 0 0.0000))
+    (uuid c9fcdd84-9cb6-4120-9056-9f0691570233)
+    (property "Sheetname" "Log Convertion" (at 205.74 203.1234 0)
+      (effects (font (size 1.27 1.27)) (justify left bottom))
+    )
+    (property "Sheetfile" "Log_Convertion.kicad_sch" (at 205.74 232.3596 0)
+      (effects (font (size 1.27 1.27)) (justify left top))
+    )
+    (instances
+      (project "VU_LED"
+        (path "/7cb59420-42b3-42c5-b41a-eedd7f57e790" (page "4"))
+      )
+    )
+  )
+
   (sheet (at 95.885 196.215) (size 27.94 10.795) (fields_autoplaced)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0.0000))
